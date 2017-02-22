@@ -108,6 +108,10 @@ getMeData(prev_type, new_type) {
         } else{
           dataColor = '#ed1010'
         }
+
+        if(data.type === 'init'){
+
+        }
         this.clasifyData(data, dataColor);
         
       }
@@ -117,6 +121,20 @@ getMeData(prev_type, new_type) {
 
 clasifyData(data, dataColor) {
   this.chart = this.refs.chart.getChart();
+    if(data.type === 'init'){
+      if(this.state.scale === 'recent'){
+        for (let i = 0; i <data.recent.length; i++){
+          this.chart.series[0].addPoint(data.recent[0]);
+        }
+      }
+      if(this.state.scale === 'recent'){
+        for (let i = 0; i <data.minute.length; i++){
+          this.chart.series[0].addPoint(data.minute[0]);
+        }
+      }
+      this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
+    }
+
   if (data.scale === 'recent') {
     if (this.recent_data.length === 0){
       this.chart.series[0].setData([]);           
@@ -132,8 +150,6 @@ clasifyData(data, dataColor) {
         console.log('Data is ', this.chart.series[0].data);
         this.chart.series[0].data[index].remove();
       }
-    else if (data.type === 'init') {
-      this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
     }
   } else {
     if (this.minute_data.length === 0){
