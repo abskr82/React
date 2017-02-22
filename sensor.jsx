@@ -132,6 +132,8 @@ clasifyData(data, dataColor) {
         console.log('Data is ', this.chart.series[0].data);
         this.chart.series[0].data[index].remove();
       }
+    else if (data.type === 'init') {
+      this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
     }
   } else {
     if (this.minute_data.length === 0){
