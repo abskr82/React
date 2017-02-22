@@ -120,55 +120,55 @@ getMeData(prev_type, new_type) {
 }
 
 clasifyData(data, dataColor) {
+  console.log(data);
   this.chart = this.refs.chart.getChart();
     if(data.type === 'init'){
       if(this.state.scale === 'recent'){
         for (let i = 0; i <data.recent.length; i++){
-          this.chart.series[0].addPoint(data.recent[0]);
+          this.chart.series[0].addPoint({x:data.recent[i].key, y:data.recent[i].val});
         }
       }
-      if(this.state.scale === 'recent'){
+      if(this.state.scale === 'minute'){
         for (let i = 0; i <data.minute.length; i++){
-          this.chart.series[0].addPoint(data.minute[0]);
+          this.chart.series[0].addPoint({x:data.minute[i].key, y:data.minute[i].val});
         }
       }
-      this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
     }
 
-  if (data.scale === 'recent') {
-    if (this.recent_data.length === 0){
-      this.chart.series[0].setData([]);           
-    }
-    if (data.type === 'update') {
-      this.recent_data.push({key: data.key, val: data.val});
-      if (this.state.scale === 'recent') {
-        this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
-      }
-    }else if (data.type === 'delete') {
-      var index = this.deleteData(data.key, this.recent_data);
-      if (index){
-        console.log('Data is ', this.chart.series[0].data);
-        this.chart.series[0].data[index].remove();
-      }
-    }
-  } else {
-    if (this.minute_data.length === 0){
-       this.chart.series[0].setData([]); 
-      }
-    if (data.type === 'update') {
-      this.minute_data.push({key: data.key, val: data.val});
-      if (this.state.scale === 'minute') {
-        this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
-      }
-    }else if (data.type === 'delete') {
-      var index = this.deleteData(data.key, this.minute_data);
-      console.log('Data is 1', this.chart.series[0].data);
-      console.log('index', index);
-      if (index){
-        this.chart.series[0].data[index].remove();
-      }
-    }
-  }
+  // if (data.scale === 'recent') {
+  //   if (this.recent_data.length === 0){
+  //     this.chart.series[0].setData([]);           
+  //   }
+  //   if (data.type === 'update') {
+  //     this.recent_data.push({key: data.key, val: data.val});
+  //     if (this.state.scale === 'recent') {
+  //       this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
+  //     }
+  //   }else if (data.type === 'delete') {
+  //     var index = this.deleteData(data.key, this.recent_data);
+  //     if (index){
+  //       console.log('Data is ', this.chart.series[0].data);
+  //       this.chart.series[0].data[index].remove();
+  //     }
+  //   }
+  // } else {
+  //   if (this.minute_data.length === 0){
+  //      this.chart.series[0].setData([]); 
+  //     }
+  //   if (data.type === 'update') {
+  //     this.minute_data.push({key: data.key, val: data.val});
+  //     if (this.state.scale === 'minute') {
+  //       this.chart.series[0].addPoint({x: data.key, y:data.val, color: dataColor});
+  //     }
+  //   }else if (data.type === 'delete') {
+  //     var index = this.deleteData(data.key, this.minute_data);
+  //     console.log('Data is 1', this.chart.series[0].data);
+  //     console.log('index', index);
+  //     if (index){
+  //       this.chart.series[0].data[index].remove();
+  //     }
+  //   }
+  // }
 }
 
 
